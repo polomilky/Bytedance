@@ -51,7 +51,6 @@ function App() {
     // checkbox
     const deepCopyCheckedData = JSON.parse(JSON.stringify(response.teams));
     deepCopyCheckedData.forEach((obj) => {
-      delete obj.name;
       obj.jobs.map((o, subindex, subArr) => (
         subArr[subindex] = false
       ));
@@ -174,56 +173,61 @@ function App() {
     <div className="App">
       <h1>Opening Jobs</h1>
       <ul>
-        {listData.map((data, idx) => {
-          return (
-            <li key={idx}>
-              <label style={{ 'display': !showMTeamData[idx] ? 'inline-block' : 'none' }}>
-                <input id={idx} type="checkbox" onChange={handleAllCheck} /> {data.name} [{positionTotalData[idx]}]
-              </label>
-              <label style={{ 'display': showMTeamData[idx] ? 'block' : 'none' }}>
-                <input type="text" onChange={e => setMName(e.target.value)} />
-                <button data-index={idx} onClick={ModifyTeam}>Ok</button>
-                <button data-index={idx} onClick={cancelModifyTeam}>Cancel</button>
-              </label>
-              <button data-index={idx} onClick={modifyTeamName}>Modify</button>
-              <button data-index={idx} onClick={showCollapse}>Collapse</button>
-              <ul data-index={collapseData[idx]} style={{ 'display': collapseData[idx] ? 'block' : 'none' }}>
-                {data.jobs.map((subData, subIdx) => {
-                  return (
-                    <li key={`${idx}${subIdx}`}>
-                        {
-                          showMPData[idx] &&
-                          <>
-                          <label id={subIdx} className={idx} style={{ 'display': !showMPData[idx].jobs[subIdx] ? 'inline-block' : 'none' }}>
-                            <input id={subIdx} className={idx} type="checkbox" onChange={handleCheck} /> {subData.name} [{subData.count}]
-                          </label>
-                          <label id={subIdx} className={idx} style={{ 'display': showMPData[idx].jobs[subIdx] ? 'block' : 'none' }}>
-                            <input type="text" onChange={e => setMPName(e.target.value)} />
-                            <input type="text" onChange={e => setMPCount(e.target.value)} />
-                            <button className={idx} data-index={subIdx} onClick={ModifyPosition}>Ok</button>
-                            <button className={idx} data-index={subIdx}>Cancel</button>
-                          </label>
-                          <button id={subIdx} className={idx} onClick={modifyPName}>Modify</button>
-                          </>
-                        }
-                    </li>
-                  )})
-                }
-
-                <li data-index={showData[idx]} style={{ 'display': showData[idx] ? 'block' : 'none' }}>
-                  <input type="text" placeholder="Position name" onChange={e => setpName(e.target.value)} />
-                  <input type="text" placeholder="Position count" onChange={e => setpCount(e.target.value)} />
-                  <button data-index={idx} onClick={addNewPosition}>Ok</button>
-                  <button>Cancel</button>
+        {listData.map((data, idx) => (
+          <li key={data.name}>
+            <label style={{ display: !showMTeamData[idx] ? 'inline' : 'none' }}>
+              <input id={idx} type="checkbox" onChange={handleAllCheck} />
+              {data.name}
+              [
+              {positionTotalData[idx]}
+              ]
+            </label>
+            <label style={{ display: showMTeamData[idx] ? 'block' : 'none' }}>
+              <input type="text" onChange={(e) => setMName(e.target.value)} />
+              <button type="button" data-index={idx} onClick={ModifyTeam}>Ok</button>
+              <button type="button" data-index={idx} onClick={cancelModifyTeam}>Cancel</button>
+            </label>
+            <button type="button" data-index={idx} onClick={modifyTeamName}>Modify</button>
+            <button type="button" data-index={idx} onClick={showCollapse}>Collapse</button>
+            <ul data-index={collapseData[idx]} style={{ display: collapseData[idx] ? 'block' : 'none' }}>
+              {data.jobs.map((subData, subIdx) => (
+                <li key={subData.name}>
+                  {
+                    showMPData[idx]
+                    && (
+                      <>
+                        <label id={subIdx} className={idx} style={{ 'display': !showMPData[idx].jobs[subIdx] ? 'inline' : 'none' }}>
+                          <input id={subIdx} className={idx} type="checkbox" onChange={handleCheck} />
+                          {subData.name}
+                          [
+                          {subData.count}
+                          ]
+                        </label>
+                        <label id={subIdx} className={idx} style={{ 'display': showMPData[idx].jobs[subIdx] ? 'block' : 'none' }}>
+                          <input type="text" onChange={(e) => setMPName(e.target.value)} />
+                          <input type="text" onChange={(e) => setMPCount(e.target.value)} />
+                          <button type="button" className={idx} data-index={subIdx} onClick={ModifyPosition}>Ok</button>
+                          <button type="button" className={idx} data-index={subIdx}>Cancel</button>
+                        </label>
+                        <button type="button" id={subIdx} className={idx} onClick={modifyPName}>Modify</button>
+                      </>
+                    )
+                  }
                 </li>
-                <li>
-                  <button data-index={idx} onClick={showArea}>+ New Position</button>
-                </li>
-              </ul>
-            </li>
-          )
-        })}
-        <li style={{ 'display': showTeamData ? 'block' : 'none' }}>
+              ))}
+              <li data-index={showData[idx]} style={{ display: showData[idx] ? 'block' : 'none' }}>
+                <input type="text" placeholder="Position name" onChange={(e) => setpName(e.target.value)} />
+                <input type="text" placeholder="Position count" onChange={(e) => setpCount(e.target.value)} />
+                <button type="button" data-index={idx} onClick={addNewPosition}>Ok</button>
+                <button type="button">Cancel</button>
+              </li>
+              <li>
+                <button type="button" data-index={idx} onClick={showArea}>+ New Position</button>
+              </li>
+            </ul>
+          </li>
+        ))}
+        <li style={{ display: showTeamData ? 'block' : 'none' }}>
           <input type="text" placeholder="Team name" onChange={(e) => setTName(e.target.value)} />
           <button type="button" onClick={addNewTeam}>Ok</button>
           <button type="button">Cancel</button>
