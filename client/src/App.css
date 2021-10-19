@@ -42,3 +42,18 @@ input[type="text"] {
     -webkit-border-radius: 5px;
     border-radius: 5px;
 }
+.button {
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    padding: 10px 15px;
+    font-size: 13px;
+    line-height: 15px;
+}
+.success_btn {
+    background: #352D40;
+    color: #D2DDF0;
+}
+.reset_btn {
+    background: #FF781E;
+    color: #fff;
+}

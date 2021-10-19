@@ -207,19 +207,19 @@ function App() {
                           <input type="text" onChange={(e) => setMPName(e.target.value)} />
                           <input type="text" onChange={(e) => setMPCount(e.target.value)} />
                           <button type="button" className={idx} data-index={subIdx} onClick={ModifyPosition}>Ok</button>
-                          <button type="button" className={idx} data-index={subIdx}>Cancel</button>
+                          <button type="button" className={idx} id={subIdx} onClick={modifyPName}>Cancel</button>
                         </label>
-                        <button type="button" id={subIdx} className={idx} onClick={modifyPName}>Modify</button>
+                        <button className={idx} type="button" id={subIdx} onClick={modifyPName}>Modify</button>
                       </>
                     )
                   }
                 </li>
               ))}
-              <li data-index={showData[idx]} style={{ display: showData[idx] ? 'block' : 'none' }}>
+              <li data-index={showData[idx]} style={{ display: !showData[idx] ? 'block' : 'none' }}>
                 <input type="text" placeholder="Position name" onChange={(e) => setpName(e.target.value)} />
                 <input type="text" placeholder="Position count" onChange={(e) => setpCount(e.target.value)} />
                 <button type="button" data-index={idx} onClick={addNewPosition}>Ok</button>
-                <button type="button">Cancel</button>
+                <button type="button" data-index={idx} onClick={showArea}>Cancel</button>
               </li>
               <li>
                 <button type="button" data-index={idx} onClick={showArea}>+ New Position</button>
@@ -230,14 +230,14 @@ function App() {
         <li style={{ display: showTeamData ? 'block' : 'none' }}>
           <input type="text" placeholder="Team name" onChange={(e) => setTName(e.target.value)} />
           <button type="button" onClick={addNewTeam}>Ok</button>
-          <button type="button">Cancel</button>
+          <button type="button" onClick={showTeamArea}>Cancel</button>
         </li>
         <li>
           <button type="button" onClick={showTeamArea}>+ New Team</button>
         </li>
       </ul>
-      <button type="button">Save</button>
-      <button type="button" onClick={fetchMyAPI}>Reset</button>
+      <button className="button success_btn" type="button">Save</button>
+      <button className="button reset_btn" type="button" onClick={fetchMyAPI}>Reset</button>
     </div>
   );
 }
