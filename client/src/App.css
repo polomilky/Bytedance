@@ -1,0 +1,44 @@
+body {
+    padding: 0 2%;
+    color: #2e3e50;
+    background: #d8dddd;
+}
+h1 {
+    font-family: 'Baloo Tamma', cursive;
+}
+li {
+    color: #2c3e50;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: justify;
+    letter-spacing: 1px;
+    font-family: 'Raleway', serif;
+}
+button {
+    margin-right: 5px;
+    cursor: pointer;
+    border: 0 none;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+}
+button:hover {
+    transition: all 150ms linear;
+    opacity: 0.85;
+}
+button:active {
+    transition: all 150ms linear;
+    opacity: 0.75;
+}
+button:focus {
+    outline: 1px dotted #959595;
+    outline-offset: -4px;
+}
+input[type="text"] {
+    margin-right: 5px;
+    border: 0 none;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
