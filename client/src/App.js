@@ -24,44 +24,44 @@ function App() {
   // checkbox
   const [showCheckedData, setCheckedData] = useState([]);
   const [positionBooleanData, setPositionBooleanData] = useState([]);
+  const fetchMyAPI = async () => {
+    let response = await fetch('/api');
+    response = await response.json();
+    // all data
+    setData(response.teams);
+    // 部門總數
+    const positionTotalArr = new Array(response.teams.length).fill(0);
+    setPositionTotalData(positionTotalArr);
+    // 區域顯示
+    const teamsArr = new Array(response.teams.length).fill(false);
+    setShowData(teamsArr);
+    // 部門checkbox
+    setPositionBooleanData(teamsArr);
+    // 修改部門資料
+    const teamsMArr = new Array(response.teams.length).fill(false);
+    setShowMTeamData(teamsMArr);
+    // 修改職位資料, 先 deep copy, 再 foreach replace false
+    let deep_copy_data = JSON.parse(JSON.stringify(response.teams));
+    deep_copy_data.forEach((obj, index, arr) => {
+      delete obj.name;
+      obj.jobs.map((o, subindex, subArr) => (
+        subArr[subindex] = false
+      ));
+    });
+    setShowMPData(deep_copy_data);
+    // checkbox
+    let deep_copy_checked_data = JSON.parse(JSON.stringify(response.teams));
+    deep_copy_checked_data.forEach((obj, index, arr) => {
+      delete obj.name;
+      obj.jobs.map((o, subindex, subArr) => (
+        subArr[subindex] = false
+      ));
+    });
+    setCheckedData(deep_copy_checked_data);
+    // 下拉顯示
+    setCollapseData(teamsArr);
+  }
   useEffect(() => {
-    async function fetchMyAPI() {
-      let response = await fetch('/api');
-      response = await response.json();
-      // all data
-      setData(response.teams);
-      // 部門總數
-      const positionTotalArr = new Array(response.teams.length).fill(0);
-      setPositionTotalData(positionTotalArr);
-      // 區域顯示
-      const teamsArr = new Array(response.teams.length).fill(false);
-      setShowData(teamsArr);
-      // 部門checkbox
-      setPositionBooleanData(teamsArr);
-      // 修改部門資料
-      const teamsMArr = new Array(response.teams.length).fill(false);
-      setShowMTeamData(teamsMArr);
-      // 修改職位資料, 先 deep copy, 再 foreach replace false
-      let deep_copy_data = JSON.parse(JSON.stringify(response.teams));
-      deep_copy_data.forEach((obj, index, arr) => {
-        delete obj.name;
-        obj.jobs.map((o, subindex, subArr) => (
-          subArr[subindex] = false
-        ));
-      });
-      setShowMPData(deep_copy_data);
-      // checkbox
-      let deep_copy_checked_data = JSON.parse(JSON.stringify(response.teams));
-      deep_copy_checked_data.forEach((obj, index, arr) => {
-        delete obj.name;
-        obj.jobs.map((o, subindex, subArr) => (
-          subArr[subindex] = false
-        ));
-      });
-      setCheckedData(deep_copy_checked_data);
-      // 下拉顯示
-      setCollapseData(teamsArr);
-    }
     fetchMyAPI()
   }, [])
   // 區域顯示
@@ -233,7 +233,7 @@ function App() {
         </li>
       </ul>
       <button>Save</button>
-      <button>Reset</button>
+      <button onClick={fetchMyAPI}>Reset</button>
     </div>
   );
 }
